@@ -1,4 +1,4 @@
-package Queue;
+package stru.Queue;
 
 import java.util.*;
 
@@ -13,7 +13,7 @@ public abstract class AbstractQueue<E>
         if (offer(e))
             return true;
         else
-            throw new IllegalStateException("Queue full");
+            throw new IllegalStateException("stru.Queue full");
     }
 
     public E remove() {

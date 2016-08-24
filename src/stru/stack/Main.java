@@ -1,4 +1,4 @@
-package stack;
+package stru.stack;
 
 /**
  * Created by taojiatao.aron on 2016/8/23.

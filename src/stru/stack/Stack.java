@@ -1,4 +1,4 @@
-package stack;
+package stru.stack;
 
 import java.util.Arrays;
 

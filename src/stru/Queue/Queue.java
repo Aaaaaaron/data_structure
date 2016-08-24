@@ -1,4 +1,4 @@
-package Queue;
+package stru.Queue;
 
 import java.util.NoSuchElementException;
 
@@ -22,7 +22,7 @@ public class Queue < E > {
 
     public boolean enqueue ( E obj ) {
         if ( isFull() ) {
-            throw new IllegalStateException( "Queue full" );
+            throw new IllegalStateException( "stru.Queue full" );
         }
         else {
             queue[ ++tail ] = obj;

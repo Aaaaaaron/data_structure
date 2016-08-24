@@ -1,4 +1,4 @@
-package Queue;
+package stru.Queue;
 
 import java.lang.ref.WeakReference;
 import java.util.*;

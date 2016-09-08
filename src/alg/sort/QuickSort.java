@@ -24,23 +24,15 @@ public class QuickSort
         while ( left < right )
         {
             while ( arr[ left ] < mid && left < right )
-            {
                 left++;
-            }
             while ( arr[ right ] >= mid && left < right )
-            {
                 right--;
-            }
             swap( arr, left, right );
         }
         if ( arr[ left ] >= arr[ end ] )
-        {
             swap( arr, left, end );
-        }
         else
-        {
             left++;
-        }
         sort( arr, start, left - 1 );
         sort( arr, left + 1, end );
     }

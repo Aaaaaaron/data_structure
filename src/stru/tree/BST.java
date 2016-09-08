@@ -1,15 +1,14 @@
 package stru.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * 向上取整（ceil(x) 大于x的最小） 向下取整（floor(x)小于x的最大）
  */
-public class BST < K extends Comparable< K >, V > {
+public class BST < K extends Comparable< K >, V >
+{
     private Node root;
 
-    public static void main ( String[] args ) {
+    public static void main ( String[] args )
+    {
         BST< String, String > tree = new BST<>();
         tree.put( "s", "s" );
         tree.put( "e", "e" );
@@ -21,8 +20,8 @@ public class BST < K extends Comparable< K >, V > {
         tree.put( "m", "m" );
         tree.put( "p", "p" );
         tree.put( "l", "l" );
-        tree.delete( "e" );
         tree.print();
+        tree.delete( "e" );
         System.out.println();
         //System.out.println( tree.size() );
         //System.out.println( tree.get( "a" ) );
@@ -36,203 +35,202 @@ public class BST < K extends Comparable< K >, V > {
 
     }
 
-    public V get ( K key ) {
+    //按顺序打印 中序?
+    public void print ( Node x )
+    {
+        if ( x == null )
+            return;
+        print( x.left );
+        System.out.print( x.key );
+        print( x.right );
+    }
+
+    public V get ( K key )
+    {
         return get( root, key );
     }
 
-    public V get ( Node x, K key ) {
-        if ( x == null ) {
+    public V get ( Node x, K key )
+    {
+        if ( x == null )
             return null;
-        }
         int cmp = key.compareTo( x.key );
-        if ( cmp < 0 ) {
+        if ( cmp < 0 )
             return get( x.left, key );
-        }
-        else if ( cmp > 0 ) {
+        else if ( cmp > 0 )
             return get( x.right, key );
-        }
-        else {
+        else
             return x.value;
-        }
     }
 
-    public void put ( K key, V value ) {
+    public void put ( K key, V value )
+    {
         root = put( root, key, value );
     }
 
     //BST的插入会有最坏情况的啊(就是你从小到大插入 abcde这样 你第一个插入的点是根节点,是基于这个构建的树!)
-    public Node put ( Node x, K key, V value ) {
-        if ( x == null ) {
+    public Node put ( Node x, K key, V value )
+    {
+        if ( x == null )
             return new Node( key, value, 1 );
-        }
         int cmp = key.compareTo( x.key );
-        if ( cmp < 0 ) {
+        if ( cmp < 0 )
             x.left = put( x.left, key, value );
-        }
-        else if ( cmp > 0 ) {
+        else if ( cmp > 0 )
             x.right = put( x.right, key, value );
-        }
-        else {
+        else
             x.value = value;
-        }
         x.sumOfChildNode = size( x.left ) + size( x.right ) + 1;
         return x;
     }
 
-    public int size () {
+    public int size ()
+    {
         return size( root );
     }
 
-    public int size ( Node x ) {
-        if ( x == null ) {
+    public int size ( Node x )
+    {
+        if ( x == null )
             return 0;
-        }
-        else {
+        else
             return x.sumOfChildNode;
-        }
     }
 
-    public K min () {
+    public K min ()
+    {
         return min( root ).key;
     }
 
-    public K max () {
+    public K max ()
+    {
         return max( root ).key;
     }
 
-    private Node min ( Node x ) {
-        if ( x.left == null ) {
+    private Node min ( Node x )
+    {
+        if ( x.left == null )
             return x;
-        }
-        else {
+        else
             return min( x.left );
-        }
     }
 
-    public Node max ( Node x ) {
-        if ( x.right == null ) {
+    public Node max ( Node x )
+    {
+        if ( x.right == null )
             return x;
-        }
-        else {
+        else
             return max( x.right );
-        }
     }
 
-    public K floor ( K key ) {
+    public K floor ( K key )
+    {
         Node x = floor( root, key );
 
-        if ( x == null ) {
+        if ( x == null )
             return null;
-        }
         return x.key;
     }
 
-    public K ceiling ( K key ) {
+    public K ceiling ( K key )
+    {
         Node x = ceiling( root, key );
 
-        if ( x == null ) {
+        if ( x == null )
             return null;
-        }
         return x.key;
     }
 
-    public Node floor ( Node x, K key ) {
-        if ( x == null ) {
+    public Node floor ( Node x, K key )
+    {
+        if ( x == null )
             return null;
-        }
         int cmp = key.compareTo( x.key );
-        if ( cmp == 0 ) {
+        if ( cmp == 0 )
             return x;
-        }
-        else if ( cmp < 0 ) {
+        else if ( cmp < 0 )
             return floor( x.left, key );
-        }
-        else {
+        else
+        {
             Node t = floor( x.right, key );
-            if ( t != null ) {
+            if ( t != null )
                 return t;
-            }
-            else {
+            else
                 return x;
-            }
         }
     }
 
-    private Node ceiling ( Node x, K key ) {
-        if ( x == null ) {
+    private Node ceiling ( Node x, K key )
+    {
+        if ( x == null )
             return null;
-        }
         int cmp = key.compareTo( x.key );
-        if ( cmp == 0 ) {
+        if ( cmp == 0 )
             return x;
-        }
-        if ( cmp < 0 ) {
+        if ( cmp < 0 )
+        {
             // 一定要这里也是个递归啊!!!
             Node t = ceiling( x.left, key );
-            if ( t != null ) {
+            if ( t != null )
                 return t;
-            }
-            else {
+            else
                 return x;
-            }
         }
         return ceiling( x.right, key );
     }
 
-    public void print () {
+    public void print ()
+    {
         print( root );
     }
 
-    public K select ( int k ) {
+    public K select ( int k )
+    {
         return select( root, k ).key;
     }
 
     //树中正好有K个小于它的键 往左走减一 往右走不减
-    public Node select ( Node x, int k ) {
-        if ( x == null ) {
+    public Node select ( Node x, int k )
+    {
+        if ( x == null )
             return null;
-        }
         int t = size( x.left );
 
-        if ( t > k ) {//继续往左走
+        if ( t > k )//继续往左走
             return select( x.left, k );
-        }
-        else if ( t < k ) {
+        else if ( t < k )
             return select( x.right, k - t - 1 );
-        }
-        else {
+        else
             return x;
-        }
     }
 
-    public int rank ( K key ) {
+    public int rank ( K key )
+    {
         return rank( root, key );
     }
 
-    private int rank ( Node x , K key) {
-        if ( x == null ) {
+    private int rank ( Node x, K key )
+    {
+        if ( x == null )
             return 0;
-        }
         int cmp = key.compareTo( x.key );
-        if ( cmp < 0 ) {
+        if ( cmp < 0 )
             return rank( x.left, key );
-        }
-        else if ( cmp > 0 ) {
+        else if ( cmp > 0 )
             return 1 + size( x.left ) + rank( x.right, key );
-        }
-        else {
+        else
             return size( x.left );
-        }
     }
 
-    public void deleteMin () {
+    public void deleteMin ()
+    {
         root = deleteMin( root );
     }
 
-    public Node deleteMin ( Node x) {
-        if ( x.left == null ) {
+    public Node deleteMin ( Node x )
+    {
+        if ( x.left == null )
             return x.right;
-        }
         x.left = deleteMin( x.left );//什么递归完了才会到下面
         ////////////////////////////
         x.sumOfChildNode = size( x.left ) + size( x.right ) + 1;
@@ -245,26 +243,23 @@ public class BST < K extends Comparable< K >, V > {
     }
 
     //todo
-    private Node delete ( Node x, K key ) {
-        if ( x == null ) {
+    private Node delete ( Node x, K key )
+    {
+        if ( x == null )
             return null;
-        }
 
         int cmp = key.compareTo( x.key );
 
-        if ( cmp < 0 ) {//在x的左边
+        if ( cmp < 0 )//在x的左边
             x.left = delete( x.left, key );//表示当前节点不是,往左边删除
-        }
-        else if ( cmp < 0 ) {
+        else if ( cmp < 0 )
             x.right = delete( x.right, key );
-        }
-        else {
-            if ( x.right == null ) {
+        else
+        {
+            if ( x.right == null )
                 return x.left;
-            }
-            if ( x.left == null ) {
+            if ( x.left == null )
                 return x.right;
-            }
             Node t = x;
             x = min( t.right );
             x.right = deleteMin( t.right );
@@ -273,32 +268,34 @@ public class BST < K extends Comparable< K >, V > {
         x.sumOfChildNode = size( x.left ) + size( x.right ) + 1;
         return x;
     }
+    //非递归版本 按层次打印
+    //public void print ( Node x ) {
+    //    if ( root == null ) {
+    //        return;
+    //    }
+    //    Queue< Node > queue = new LinkedList<>();
+    //    queue.add( root );
+    //    while ( !queue.isEmpty() ) {
+    //        Node node = queue.poll();
+    //        System.out.print( node.value + "," );
+    //        if ( node.left != null ) {
+    //            queue.add( node.left );
+    //        }
+    //        if ( node.right != null ) {
+    //            queue.add( node.right );
+    //        }
+    //    }
+    //}
 
-    public void print ( Node x ) {
-        if ( root == null ) {
-            return;
-        }
-        Queue< Node > queue = new LinkedList<>();
-        queue.add( root );
-        while ( !queue.isEmpty() ) {
-            Node node = queue.poll();
-            System.out.print( node.value + "," );
-            if ( node.left != null ) {
-                queue.add( node.left );
-            }
-            if ( node.right != null ) {
-                queue.add( node.right );
-            }
-        }
-    }
-
-    private class Node {
+    private class Node
+    {
         private K key;
         private V value;
         private Node left, right;
         private int sumOfChildNode;
 
-        public Node ( K key, V value, int sumOfChildNode ) {
+        public Node ( K key, V value, int sumOfChildNode )
+        {
             this.key = key;
             this.value = value;
             this.sumOfChildNode = sumOfChildNode;
